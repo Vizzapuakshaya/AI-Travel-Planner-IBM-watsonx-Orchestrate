@@ -11,6 +11,12 @@ A full-stack AI-powered travel planning web application that uses an embedded **
 
 ---
 
+## 🏆 IBM SkillsBuild Hackathon Project
+
+This project was developed as part of the **IBM SkillsBuild Hackathon** using **IBM watsonx Orchestrate**. It demonstrates an AI-powered Travel Planner that generates personalized travel itineraries through an intelligent conversational assistant integrated into a modern Flask web application. The solution combines an interactive web interface with an IBM watsonx Orchestrate AI agent to deliver personalized travel recommendations, itineraries, and travel guidance.
+
+---
+
 ## 🌟 Features
 
 | Feature | Description |
