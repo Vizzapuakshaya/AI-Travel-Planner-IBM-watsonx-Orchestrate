@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Contact Us — TravelPlannerAI{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="contact-hero">
+  <div class="container">
+    <h1 class="text-white fw-800 mb-2">Get in Touch</h1>
+    <p class="text-white-50 fs-5">Have a question or feedback? We'd love to hear from you.</p>
+  </div>
+</section>
+
+<!-- ── CONTACT CONTENT ──────────────────────────────────── -->
+<section class="py-5">
+  <div class="container py-4">
+    <div class="row g-5">
+
+      <!-- Info Cards -->
+      <div class="col-lg-4">
+        <h4 class="fw-700 mb-4" style="color:var(--primary);">Contact Information</h4>
+
+        <div class="contact-info-card mb-3">
+          <div class="contact-icon bg-gradient-brand">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h6 class="fw-700">Email Us</h6>
+          <p class="text-muted small">support@travelplannerai.com</p>
+          <p class="text-muted small mb-0">hello@travelplannerai.com</p>
+        </div>
+
+        <div class="contact-info-card mb-3">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#f39c12,#e67e22);">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h6 class="fw-700">Call Us</h6>
+          <p class="text-muted small">+1 (555) 123-4567</p>
+          <p class="text-muted small mb-0">Mon–Fri, 9 AM – 6 PM EST</p>
+        </div>
+
+        <div class="contact-info-card mb-3">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h6 class="fw-700">Our Location</h6>
+          <p class="text-muted small mb-0">IBM Innovation Hub<br>New York, NY 10001, USA</p>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#9b59b6,#8e44ad);">
+            <i class="fab fa-ibm"></i>
+          </div>
+          <h6 class="fw-700">Powered By IBM</h6>
+          <p class="text-muted small mb-0">
+            Built on IBM watsonx Orchestrate for enterprise-grade AI.
+          </p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="mt-4">
+          <h6 class="fw-700 mb-3" style="color:var(--primary);">Follow Us</h6>
+          <div class="d-flex gap-2">
+            {% set socials = [
+              ("fab fa-twitter",   "#", "Twitter"),
+              ("fab fa-instagram", "#", "Instagram"),
+              ("fab fa-linkedin-in","#","LinkedIn"),
+              ("fab fa-github",    "#", "GitHub")
+            ] %}
+            {% for icon, href, label in socials %}
+              <a href="{{ href }}" aria-label="{{ label }}"
+                 class="btn btn-outline-secondary btn-sm rounded-circle"
+                 style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+                <i class="{{ icon }}"></i>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-8">
+        <div class="contact-form-card">
+          <h4 class="fw-700 mb-1" style="color:var(--primary);">Send Us a Message</h4>
+          <p class="text-muted small mb-4">We typically respond within 24 hours.</p>
+
+          <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label">First Name <span class="text-danger">*</span></label>
+                <input type="text" name="first_name" class="form-control" placeholder="Your first name" required>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                <input type="text" name="last_name" class="form-control" placeholder="Your last name" required>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label">Phone (optional)</label>
+                <input type="tel" name="phone" class="form-control" placeholder="+1 (555) 000-0000">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Subject <span class="text-danger">*</span></label>
+                <select name="subject" class="form-select" required>
+                  <option value="" selected disabled>Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="support">Technical Support</option>
+                  <option value="partnership">Partnership Opportunity</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="ibm">IBM watsonx Integration</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Destination of Interest (optional)</label>
+                <input type="text" name="destination" class="form-control" placeholder="e.g. Japan, Europe tour…">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message <span class="text-danger">*</span></label>
+                <textarea name="message" class="form-control" rows="5"
+                          placeholder="Tell us how we can help you…" required></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="newsletter">
+                  <label class="form-check-label small" for="newsletter">
+                    Subscribe to our newsletter for travel tips and destination guides.
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                  <i class="fas fa-paper-plane me-2"></i>Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────── -->
+<section class="py-5" style="background:#f8f9fa;">
+  <div class="container py-4">
+    <div class="section-header text-center">
+      <div class="badge-label">FAQ</div>
+      <div class="section-divider"></div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          {% set faqs = [
+            ("Is TravelPlannerAI free to use?",
+             "Yes! Basic trip planning is completely free. Generate unlimited itineraries, use the AI chat assistant, and download PDFs at no cost."),
+            ("How does the AI generate itineraries?",
+             "We use an embedded IBM watsonx Orchestrate agent for chat and a structured itinerary engine for day-by-day trip plans — no SDK configuration required."),
+            ("Do I need an IBM account?",
+             "No. TravelPlannerAI handles all IBM watsonx Orchestrate interactions via the embedded widget. You only need a TravelPlannerAI account to save and manage your trips."),
+            ("Can I customize the generated itinerary?",
+             "Yes! After generating your itinerary, you can use the AI chat assistant to refine, add, or remove activities, and re-generate sections as needed."),
+            ("How accurate are the recommendations?",
+             "The IBM watsonx Orchestrate agent provides accurate travel guidance. We always advise verifying hours, prices, and availability locally or through official tourism sources.")
+          ] %}
+          {% for question, answer in faqs %}
+            <div class="accordion-item border-0 mb-2 rounded-xl overflow-hidden shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button {% if not loop.first %}collapsed{% endif %} fw-600 rounded-xl"
+                        type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq{{ loop.index0 }}">
+                  {{ question }}
+                </button>
+              </h2>
+              <div id="faq{{ loop.index0 }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">{{ answer }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

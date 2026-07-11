@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block title %}Plan Your Trip — TravelPlannerAI{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="plan-hero">
+  <div class="container text-center">
+    <div class="ibm-badge mx-auto mb-3" style="width:fit-content;">
+      <i class="fab fa-ibm me-1"></i>IBM watsonx Orchestrate
+    </div>
+    <h1 class="text-white fw-800 mb-2">Plan Your Perfect Trip</h1>
+    <p class="text-white-50">Fill in your details and let IBM watsonx Orchestrate create a personalized itinerary in seconds.</p>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <!-- Step Indicator -->
+        <div class="step-indicator mb-4" id="stepIndicator">
+          <div class="step active" id="step1">
+            <div class="step-num">1</div>
+            <span class="d-none d-sm-inline">Destination</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step2">
+            <div class="step-num">2</div>
+            <span class="d-none d-sm-inline">Preferences</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step3">
+            <div class="step-num">3</div>
+            <span class="d-none d-sm-inline">Generate</span>
+          </div>
+        </div>
+
+        <form id="tripForm">
+          <!-- ── STEP 1: Destination & Dates ── -->
+          <div class="step-panel plan-card">
+            <div class="plan-card-header">
+              <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Step 1: Where & When</h5>
+            </div>
+            <div class="plan-card-body">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Destination <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                    <input type="text" id="destination" class="form-control form-control-lg"
+                           placeholder="e.g. Paris, France or Tokyo, Japan" required>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Departure Date <span class="text-danger">*</span></label>
+                  <input type="date" id="start_date" class="form-control form-control-lg" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Return Date <span class="text-danger">*</span></label>
+                  <input type="date" id="end_date" class="form-control form-control-lg" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Number of Travelers</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                    <input type="number" id="travelers" class="form-control form-control-lg"
+                           value="2" min="1" max="20">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label">Trip Type</label>
+                  <select class="form-select form-select-lg">
+                    <option value="leisure" selected>🏖️ Leisure &amp; Relaxation</option>
+                    <option value="adventure">🧗 Adventure &amp; Outdoor</option>
+                    <option value="cultural">🎭 Cultural &amp; Historical</option>
+                    <option value="business">💼 Business Trip</option>
+                    <option value="honeymoon">💕 Honeymoon</option>
+                    <option value="family">👨‍👩‍👧 Family Vacation</option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-4">
+                <button type="button" id="nextBtn" class="btn btn-primary btn-lg px-5" onclick="Planner.next()">
+                  Next <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STEP 2: Preferences ── -->
+          <div class="step-panel plan-card" style="display:none;">
+            <div class="plan-card-header">
+              <h5 class="mb-0"><i class="fas fa-sliders-h me-2"></i>Step 2: Your Preferences</h5>
+            </div>
+            <div class="plan-card-body">
+
+              <!-- Budget -->
+              <div class="mb-4">
+                <label class="form-label fw-600">Budget Level</label>
+                <div class="budget-options">
+                  <input type="radio" name="budget" id="budget_budget" class="budget-opt" value="budget">
+                  <label class="budget-label" for="budget_budget">
+                    <i class="fas fa-coins text-success"></i>Budget<br>
+                    <small class="text-muted">$50–100/day</small>
+                  </label>
+
+                  <input type="radio" name="budget" id="budget_medium" class="budget-opt" value="medium" checked>
+                  <label class="budget-label" for="budget_medium">
+                    <i class="fas fa-dollar-sign text-primary"></i>Medium<br>
+                    <small class="text-muted">$100–250/day</small>
+                  </label>
+
+                  <input type="radio" name="budget" id="budget_luxury" class="budget-opt" value="luxury">
+                  <label class="budget-label" for="budget_luxury">
+                    <i class="fas fa-gem text-warning"></i>Luxury<br>
+                    <small class="text-muted">$250+/day</small>
+                  </label>
+
+                  <input type="radio" name="budget" id="budget_ultra" class="budget-opt" value="ultra-luxury">
+                  <label class="budget-label" for="budget_ultra">
+                    <i class="fas fa-crown text-danger"></i>Ultra<br>
+                    <small class="text-muted">No limit</small>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Travel Preferences -->
+              <div class="mb-4">
+                <label class="form-label fw-600">Travel Interests <small class="text-muted fw-normal">(select all that apply)</small></label>
+                <div class="d-flex flex-wrap gap-2">
+                  {% set prefs = [
+                    ("cultural",      "fas fa-landmark",     "Culture & History"),
+                    ("food",          "fas fa-utensils",     "Food & Dining"),
+                    ("adventure",     "fas fa-mountain",     "Adventure"),
+                    ("beaches",       "fas fa-umbrella-beach","Beaches"),
+                    ("shopping",      "fas fa-shopping-bag", "Shopping"),
+                    ("nightlife",     "fas fa-glass-cheers", "Nightlife"),
+                    ("nature",        "fas fa-tree",         "Nature"),
+                    ("photography",   "fas fa-camera",       "Photography"),
+                    ("art",           "fas fa-palette",      "Art & Museums"),
+                    ("sports",        "fas fa-running",      "Sports"),
+                    ("wellness",      "fas fa-spa",          "Wellness & Spa"),
+                    ("family-friendly","fas fa-child",       "Family-Friendly")
+                  ] %}
+                  {% for val, icon, label in prefs %}
+                    <input type="checkbox" id="pref_{{ val }}" class="pref-check" name="preferences" value="{{ val }}">
+                    <label class="pref-label" for="pref_{{ val }}">
+                      <i class="{{ icon }}"></i>{{ label }}
+                    </label>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Special Requirements -->
+              <div class="mb-3">
+                <label class="form-label fw-600">Special Requirements or Notes</label>
+                <textarea id="special_requirements" class="form-control" rows="3"
+                          placeholder="e.g. vegetarian diet, mobility requirements, must-see places, honeymoon surprise, anniversary trip…"></textarea>
+              </div>
+
+              <div class="d-flex justify-content-between mt-4">
+                <button type="button" id="prevBtn" class="btn btn-outline-secondary btn-lg" onclick="Planner.prev()">
+                  <i class="fas fa-arrow-left me-2"></i>Back
+                </button>
+                <button type="button" class="btn btn-primary btn-lg px-5" onclick="Planner.next()">
+                  Next <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STEP 3: Review & Generate ── -->
+          <div class="step-panel plan-card" style="display:none;">
+            <div class="plan-card-header">
+              <h5 class="mb-0"><i class="fas fa-magic me-2"></i>Step 3: Review &amp; Generate</h5>
+            </div>
+            <div class="plan-card-body">
+
+              <div class="alert alert-primary d-flex gap-3 align-items-center">
+                <i class="fab fa-ibm fa-2x"></i>
+                <div>
+                  <strong>IBM watsonx Orchestrate is ready to generate your itinerary!</strong><br>
+                  <small>IBM watsonx will create a personalized day-by-day travel plan tailored to your preferences.</small>
+                </div>
+              </div>
+
+              <!-- Summary preview -->
+              <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                  <div class="card border-0 bg-light rounded-xl p-3">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <i class="fas fa-map-marker-alt text-danger"></i>
+                      <small class="text-muted fw-600 text-uppercase" style="font-size:.72rem;letter-spacing:.06em;">Destination</small>
+                    </div>
+                    <strong id="reviewDestination" class="text-primary">—</strong>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card border-0 bg-light rounded-xl p-3">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <i class="fas fa-calendar-alt text-primary"></i>
+                      <small class="text-muted fw-600 text-uppercase" style="font-size:.72rem;letter-spacing:.06em;">Travel Dates</small>
+                    </div>
+                    <strong id="reviewDates" class="text-primary">—</strong>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card border-0 bg-light rounded-xl p-3">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <i class="fas fa-users text-success"></i>
+                      <small class="text-muted fw-600 text-uppercase" style="font-size:.72rem;letter-spacing:.06em;">Travelers</small>
+                    </div>
+                    <strong id="reviewTravelers" class="text-primary">—</strong>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card border-0 bg-light rounded-xl p-3">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <i class="fas fa-dollar-sign text-warning"></i>
+                      <small class="text-muted fw-600 text-uppercase" style="font-size:.72rem;letter-spacing:.06em;">Budget</small>
+                    </div>
+                    <strong id="reviewBudget" class="text-primary">—</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <button type="button" id="prevBtn2" class="btn btn-outline-secondary btn-lg" onclick="Planner.prev()">
+                  <i class="fas fa-arrow-left me-2"></i>Back
+                </button>
+                <button type="submit" id="submitBtn" class="btn btn-secondary btn-lg px-5">
+                  <i class="fas fa-magic me-2"></i>Generate My Itinerary
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Update review panel when reaching Step 3
+  const origNext = Planner.next.bind(Planner);
+  Planner.next = function() {
+    origNext();
+    if (Planner.currentStep === 3) {
+      const dest = document.getElementById("destination")?.value || "—";
+      const s    = document.getElementById("start_date")?.value  || "—";
+      const e    = document.getElementById("end_date")?.value    || "—";
+      const t    = document.getElementById("travelers")?.value   || "—";
+      const b    = document.querySelector(".budget-opt:checked")?.value || "medium";
+      document.getElementById("reviewDestination").textContent = dest;
+      document.getElementById("reviewDates").textContent       = `${s} → ${e}`;
+      document.getElementById("reviewTravelers").textContent   = `${t} traveler(s)`;
+      document.getElementById("reviewBudget").textContent      = b.charAt(0).toUpperCase() + b.slice(1);
+    }
+  };
+</script>
+{% endblock %}

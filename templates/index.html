@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+{% block title %}TravelPlannerAI — AI-Powered Travel Planning{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center min-vh-100 py-5">
+
+      <!-- Left: Copy -->
+      <div class="col-lg-6 hero-content fade-in-up">
+        <div class="hero-badge">
+          <i class="fab fa-ibm"></i> Powered by IBM watsonx Orchestrate
+        </div>
+        <h1>
+          Plan Your Dream<br>
+          Trip with <span class="highlight">AI Precision</span>
+        </h1>
+        <p class="lead">
+          Get personalized day-wise itineraries, hotel picks, restaurant recommendations,
+          budget breakdowns, and packing checklists — all powered by IBM watsonx Orchestrate in seconds.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{{ url_for('plan') }}" class="btn btn-secondary btn-lg">
+            <i class="fas fa-magic me-2"></i>Plan My Trip
+          </a>
+          <a href="{{ url_for('chatbot') }}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-robot me-2"></i>Chat with AI
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="num">50K+</span>
+            <span class="label">Trips Planned</span>
+          </div>
+          <div class="hero-stat">
+            <span class="num">120+</span>
+            <span class="label">Destinations</span>
+          </div>
+          <div class="hero-stat">
+            <span class="num">98%</span>
+            <span class="label">Happy Travelers</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Search Card -->
+      <div class="col-lg-5 offset-lg-1 mt-5 mt-lg-0 fade-in-up anim-delay-2">
+        <div class="hero-search-card">
+          <h5><i class="fas fa-search-location text-primary me-2"></i>Quick Trip Planner</h5>
+          <div class="mb-3">
+            <label class="form-label">Where do you want to go?</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+              <input type="text" id="heroDestination" class="form-control"
+                     placeholder="e.g. Paris, Tokyo, Bali…">
+            </div>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label">From</label>
+              <input type="date" id="heroStart" class="form-control">
+            </div>
+            <div class="col-6">
+              <label class="form-label">To</label>
+              <input type="date" id="heroEnd" class="form-control">
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Travelers</label>
+            <select class="form-select" id="heroTravelers">
+              <option value="1">1 — Solo</option>
+              <option value="2" selected>2 — Couple</option>
+              <option value="3">3 — Small Group</option>
+              <option value="4">4+ — Family / Group</option>
+            </select>
+          </div>
+          <button class="btn btn-primary w-100 btn-lg" onclick="heroSearch()">
+            <i class="fas fa-plane-departure me-2"></i>Generate My Itinerary
+          </button>
+          <p class="text-muted small text-center mt-2 mb-0">
+            <i class="fas fa-lock me-1"></i>Free &amp; no account required to explore
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <a href="#features"><i class="fas fa-chevron-down"></i></a>
+  </div>
+</section>
+
+<!-- ── FEATURES ──────────────────────────────────────────── -->
+<section id="features" class="py-5 bg-white">
+  <div class="container py-5">
+    <div class="section-header text-center">
+      <div class="badge-label">Why TravelPlannerAI?</div>
+      <div class="section-divider"></div>
+      <h2>Everything You Need to Travel Smarter</h2>
+      <p>IBM watsonx Orchestrate generates complete travel plans tailored to your preferences, budget, and schedule.</p>
+    </div>
+    <div class="row g-4">
+      {% set features = [
+        ("fas fa-brain",         "AI Itinerary Generation",   "Day-by-day plans powered by IBM watsonx Orchestrate — mornings, afternoons, and evenings covered."),
+        ("fas fa-hotel",         "Hotel Recommendations",     "Curated hotels for every budget: luxury, boutique, and budget-friendly options."),
+        ("fas fa-utensils",      "Restaurant Picks",          "Local dining gems, street food spots, and fine dining recommendations."),
+        ("fas fa-bus",           "Transport Guide",           "Complete transportation guide from arrival to daily commutes."),
+        ("fas fa-dollar-sign",   "Budget Breakdown",          "Detailed cost estimates across accommodation, food, attractions, and more."),
+        ("fas fa-suitcase",      "Smart Packing List",        "AI-generated packing checklist based on destination, climate, and trip type."),
+        ("fas fa-shield-alt",    "Safety Tips",               "Destination-specific safety advice, emergency contacts, and local laws."),
+        ("fas fa-file-pdf",      "PDF Export",                "Download your full itinerary as a beautiful, printable PDF."),
+        ("fas fa-robot",         "24/7 AI Chat Assistant",    "Live IBM watsonx Orchestrate agent ready to answer all travel questions."),
+        ("fas fa-camera",        "Tourist Attractions",       "Must-see sights, hidden gems, and local experiences for every destination."),
+        ("fas fa-map-marked-alt","Multi-Day Planning",        "Plan trips from 2 to 14+ days with detailed daily breakdowns."),
+        ("fas fa-star",          "Personalized Experience",   "Plans tailored to your travel style: adventure, culture, relaxation, or food.")
+      ] %}
+      {% for icon, title, desc in features %}
+        <div class="col-sm-6 col-lg-4 col-xl-3 fade-in-up">
+          <div class="feature-card h-100">
+            <div class="feature-icon">
+              <i class="{{ icon }}"></i>
+            </div>
+            <h5>{{ title }}</h5>
+            <p class="text-muted small mb-0">{{ desc }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ──────────────────────────────────────── -->
+<section class="py-5" style="background:linear-gradient(135deg,#0d1b2a 0%,#1e3a5f 100%);">
+  <div class="container py-5">
+    <div class="section-header text-center">
+      <div class="badge-label" style="background:rgba(243,156,18,.15);color:#f39c12;">How It Works</div>
+      <div class="section-divider"></div>
+      <h2 class="text-white">Plan Your Trip in 3 Easy Steps</h2>
+      <p class="text-white-50">From idea to full itinerary in under 60 seconds.</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% set steps = [
+        ("1","fas fa-edit",        "Fill the Form",       "Enter destination, dates, budget, and travel preferences."),
+        ("2","fas fa-brain",       "AI Generates Plan",   "IBM watsonx Orchestrate crafts a personalized day-by-day itinerary."),
+        ("3","fas fa-plane-departure","Travel with Confidence","Download your PDF and explore with complete confidence.")
+      ] %}
+      {% for num, icon, title, desc in steps %}
+        <div class="col-md-4 text-center fade-in-up">
+          <div class="mb-4" style="position:relative;">
+            <div class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                 style="width:80px;height:80px;background:linear-gradient(135deg,#f39c12,#e74c3c);font-size:2rem;color:#fff;box-shadow:0 6px 20px rgba(243,156,18,.4);">
+              <i class="{{ icon }}"></i>
+            </div>
+            <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark fw-bold"
+                 style="font-size:.9rem;">{{ num }}</div>
+          </div>
+          <h5 class="text-white fw-700 mb-2">{{ title }}</h5>
+          <p class="text-white-50 small">{{ desc }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+      <a href="{{ url_for('plan') }}" class="btn btn-secondary btn-lg px-5">
+        <i class="fas fa-rocket me-2"></i>Start Planning Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── DESTINATIONS ──────────────────────────────────────── -->
+<section class="py-5 bg-white">
+  <div class="container py-5">
+    <div class="section-header text-center">
+      <div class="badge-label">Popular Destinations</div>
+      <div class="section-divider"></div>
+      <h2>Explore Top Travel Destinations</h2>
+      <p>Click any destination to instantly start planning your trip.</p>
+    </div>
+    <div class="row g-4">
+      {% set destinations = [
+        ("Paris, France",    "Eiffel Tower, Louvre Museum",    "Romance & Culture", "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600"),
+        ("Tokyo, Japan",     "Shibuya, Mt. Fuji, Temples",     "Urban Adventure",   "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600"),
+        ("Bali, Indonesia",  "Rice Terraces, Beach Temples",   "Tropical Paradise", "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600"),
+        ("New York, USA",    "Times Square, Central Park",     "City Experience",   "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600"),
+        ("Rome, Italy",      "Colosseum, Vatican, Trevi",      "History & Art",     "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600"),
+        ("Maldives",         "Crystal Waters, Overwater Villas","Luxury Beach",     "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600")
+      ] %}
+      {% for name, highlights, tag, img in destinations %}
+        <div class="col-sm-6 col-lg-4 fade-in-up">
+          <div class="dest-card" onclick="exploreDestination('{{ name }}')">
+            <div style="overflow:hidden;height:220px;">
+              <img src="{{ img }}" class="dest-card-img" alt="{{ name }}" loading="lazy">
+            </div>
+            <div class="dest-card-body">
+              <span class="dest-badge">{{ tag }}</span>
+              <h5 class="fw-700 mb-1" style="color:var(--primary);">{{ name }}</h5>
+              <p class="text-muted small mb-2"><i class="fas fa-map-pin me-1 text-danger"></i>{{ highlights }}</p>
+              <button class="btn btn-primary btn-sm w-100">
+                <i class="fas fa-magic me-1"></i>Plan This Trip
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────────────── -->
+<section class="py-5" style="background:#f8f9fa;">
+  <div class="container py-5">
+    <div class="section-header text-center">
+      <div class="badge-label">Traveler Reviews</div>
+      <div class="section-divider"></div>
+      <h2>What Our Travelers Say</h2>
+      <p>Join thousands of happy travelers who planned their dream trips with AI.</p>
+    </div>
+    <div class="row g-4">
+      {% set reviews = [
+        ("Sarah M.", "Paris Trip",   "5", "TravelPlannerAI created the most detailed Paris itinerary I've ever seen! Every restaurant recommendation was spot-on. IBM watsonx Orchestrate AI is incredible!"),
+        ("James K.", "Tokyo Trip",   "5", "The AI understood exactly what I wanted — a mix of culture and street food. The budget breakdown saved me from overspending. Absolutely love it!"),
+        ("Priya R.", "Bali Getaway", "5", "I was overwhelmed planning Bali until I used this app. The day-by-day plan was perfect and the packing checklist was so thoughtful. 10/10 recommend!"),
+        ("Michael T.","NYC Weekend", "4", "Quick, detailed, and surprisingly accurate recommendations. The hotel suggestions were within my budget and the transport guide was really helpful."),
+        ("Aisha L.", "Rome Tour",    "5", "The safety tips were a lifesaver! I felt so prepared arriving in Rome. The day-by-day itinerary covered everything I wanted to see without feeling rushed."),
+        ("Chen W.",  "Maldives",     "5", "Perfect luxury trip planner! The AI suggested hidden gems that weren't in any guidebook. Downloaded the PDF and used it throughout the trip offline.")
+      ] %}
+      {% for name, trip, stars, review in reviews %}
+        <div class="col-md-6 col-lg-4 fade-in-up">
+          <div class="card h-100 border-0 shadow-sm rounded-xl p-4">
+            <div class="text-warning mb-2">
+              {% for _ in range(stars|int) %}<i class="fas fa-star"></i>{% endfor %}
+            </div>
+            <p class="text-muted fst-italic mb-3">"{{ review }}"</p>
+            <div class="d-flex align-items-center gap-2 mt-auto">
+              <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                   style="width:40px;height:40px;background:linear-gradient(135deg,#1e3a5f,#2d5986);flex-shrink:0;">
+                {{ name[0] }}
+              </div>
+              <div>
+                <strong class="d-block small">{{ name }}</strong>
+                <small class="text-muted">{{ trip }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────── -->
+<section class="py-5 text-center" style="background:linear-gradient(135deg,#0d1b2a,#1e3a5f);">
+  <div class="container py-5">
+    <div class="ibm-badge mx-auto mb-4" style="width:fit-content;">
+      <i class="fab fa-ibm"></i> Powered by IBM watsonx Orchestrate
+    </div>
+    <h2 class="text-white display-5 fw-800 mb-3">Ready to Plan Your Next Adventure?</h2>
+    <p class="text-white-50 fs-5 mb-5 mx-auto" style="max-width:520px;">
+      Let IBM watsonx Orchestrate craft the perfect personalized itinerary for your dream destination in seconds.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('plan') }}" class="btn btn-secondary btn-lg px-5">
+        <i class="fas fa-magic me-2"></i>Plan My Trip Free
+      </a>
+      <a href="{{ url_for('chatbot') }}" class="btn btn-outline-light btn-lg px-5">
+        <i class="fas fa-robot me-2"></i>Chat with TravelAI
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Set hero date defaults
+  (function() {
+    const today   = new Date().toISOString().split("T")[0];
+    const nxtWeek = new Date(Date.now() + 7 * 864e5).toISOString().split("T")[0];
+    const s = document.getElementById("heroStart");
+    const e = document.getElementById("heroEnd");
+    if (s) { s.min = today; s.value = today; }
+    if (e) { e.min = today; e.value = nxtWeek; }
+  })();
+</script>
+
+<!-- ── IBM watsonx Orchestrate floating chat widget (Home page) ── -->
+<div id="root"></div>
+<script>
+  window.wxOConfiguration = {
+    orchestrationID: "cd2b9965ef4542ee9ff6618fb15cbe2a_b0b84a7a-4517-47d6-9658-89cbd0335a87",
+    hostURL: "https://eu-gb.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:eu-gb:a/cd2b9965ef4542ee9ff6618fb15cbe2a:b0b84a7a-4517-47d6-9658-89cbd0335a87::",
+    chatOptions: {
+      agentId: "f6cba6f6-f798-4f11-a86b-4eda1c66cdf7"
+    }
+  };
+
+  setTimeout(function () {
+    var script = document.createElement('script');
+    script.src = window.wxOConfiguration.hostURL + '/wxochat/wxoLoader.js?embed=true';
+    script.addEventListener('load', function () {
+      wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);
+</script>
+{% endblock %}

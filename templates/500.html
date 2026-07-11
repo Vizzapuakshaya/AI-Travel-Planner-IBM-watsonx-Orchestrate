@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}500 — Server Error{% endblock %}
+{% block content %}
+<div class="error-page">
+  <div>
+    <div class="error-code">500</div>
+    <h2 style="color:var(--primary);font-weight:800;">Something Went Wrong</h2>
+    <p class="text-muted mb-4">Our AI hit a turbulence. Please try again in a moment.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+        <i class="fas fa-home me-2"></i>Back to Home
+      </a>
+      <a href="{{ url_for('plan') }}" class="btn btn-secondary btn-lg">
+        <i class="fas fa-redo me-2"></i>Try Again
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

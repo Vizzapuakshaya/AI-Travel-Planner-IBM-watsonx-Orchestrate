@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}About — TravelPlannerAI{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="about-hero">
+  <div class="container">
+    <div class="ibm-badge mx-auto mb-3" style="width:fit-content;">
+      <i class="fab fa-ibm me-1"></i>IBM watsonx Orchestrate Powered
+    </div>
+    <h1 class="text-white fw-800 mb-3">About TravelPlannerAI</h1>
+    <p class="text-white-50 fs-5 mx-auto" style="max-width:640px;">
+      We're on a mission to make travel planning effortless, affordable, and personalized for every traveler
+      — powered by the latest IBM AI technology.
+    </p>
+  </div>
+</section>
+
+<!-- ── MISSION ───────────────────────────────────────────── -->
+<section class="py-5 bg-white">
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 fade-in-up">
+        <div class="badge-label mb-3">Our Mission</div>
+        <h2 class="fw-800 mb-3" style="color:var(--primary);">Democratizing World-Class Travel Planning</h2>
+        <p class="text-muted">
+          TravelPlannerAI harnesses the power of <strong>IBM watsonx Orchestrate</strong>
+          to deliver travel itineraries
+          that were once only accessible to those who could afford personal travel agents.
+        </p>
+        <p class="text-muted">
+          Whether you're planning a weekend getaway or a month-long expedition, our AI
+          understands your preferences, budget, and travel style to craft the perfect plan.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <span class="tech-badge"><i class="fab fa-ibm me-2"></i>IBM watsonx.ai</span>
+          <span class="tech-badge"><i class="fas fa-brain me-2"></i>IBM watsonx Orchestrate</span>
+          <span class="tech-badge"><i class="fab fa-python me-2"></i>Python Flask</span>
+          <span class="tech-badge"><i class="fas fa-mobile-alt me-2"></i>Bootstrap 5</span>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-in-up anim-delay-2">
+        <div class="row g-3">
+          {% set stats = [
+            ("50K+", "Trips Generated",  "fas fa-map-marked-alt"),
+            ("120+", "Destinations",     "fas fa-globe"),
+            ("98%",  "Satisfaction Rate","fas fa-star"),
+            ("24/7", "AI Availability",  "fas fa-robot")
+          ] %}
+          {% for num, label, icon in stats %}
+            <div class="col-6">
+              <div class="stat-box text-center">
+                <div class="mb-2" style="font-size:1.5rem;color:var(--secondary);">
+                  <i class="{{ icon }}"></i>
+                </div>
+                <div class="big-num"><span>{{ num }}</span></div>
+                <p class="text-muted small mb-0 mt-1">{{ label }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECHNOLOGY ─────────────────────────────────────────── -->
+<section class="py-5" style="background:#f8f9fa;">
+  <div class="container py-4">
+    <div class="section-header text-center">
+      <div class="badge-label">Technology Stack</div>
+      <div class="section-divider"></div>
+      <h2>Built with IBM Enterprise AI</h2>
+      <p>TravelPlannerAI integrates cutting-edge IBM technologies to deliver accurate, personalized travel experiences.</p>
+    </div>
+    <div class="row g-4">
+      {% set tech = [
+        ("fab fa-ibm",          "IBM watsonx Orchestrate","Deployed IBM watsonx Orchestrate agent powering the live AI chat assistant with full travel planning capabilities.",                   "primary"),
+        ("fas fa-brain",        "Itinerary Engine","Structured travel-plan engine generating day-by-day itineraries, hotel picks, budgets, and packing lists.",                                         "warning"),
+        ("fas fa-cogs",         "IBM Orchestrate",   "AI orchestration layer that coordinates multiple AI tasks — from itinerary generation to budget analysis — into a seamless user experience.",                  "success"),
+        ("fab fa-python",       "Python Flask",      "Lightweight yet powerful Python web framework powering the backend API, session management, and AI model orchestration.",                                       "info"),
+        ("fas fa-file-code",    "Bootstrap 5",       "Modern responsive CSS framework ensuring TravelPlannerAI looks great and functions perfectly on any device.",                                                   "secondary"),
+        ("fas fa-file-pdf",     "ReportLab PDF",     "Professional PDF generation library enabling travelers to download and print their complete itineraries.",                                                      "danger")
+      ] %}
+      {% for icon, name, desc, color in tech %}
+        <div class="col-md-6 col-lg-4 fade-in-up">
+          <div class="feature-card h-100">
+            <div class="feature-icon" style="background:{% if color == 'warning' %}linear-gradient(135deg,#f39c12,#e67e22){% elif color == 'success' %}linear-gradient(135deg,#27ae60,#2ecc71){% elif color == 'info' %}linear-gradient(135deg,#2980b9,#3498db){% elif color == 'secondary' %}linear-gradient(135deg,#7f8c8d,#95a5a6){% elif color == 'danger' %}linear-gradient(135deg,#c0392b,#e74c3c){% else %}linear-gradient(135deg,#1e3a5f,#2d5986){% endif %};">
+              <i class="{{ icon }}"></i>
+            </div>
+            <h5>{{ name }}</h5>
+            <p class="text-muted small mb-0">{{ desc }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ──────────────────────────────────────────────── -->
+<section class="py-5 bg-white">
+  <div class="container py-4">
+    <div class="section-header text-center">
+      <div class="badge-label">The Team</div>
+      <div class="section-divider"></div>
+      <h2>Built by Passionate Travelers &amp; Engineers</h2>
+      <p>A team dedicated to combining AI innovation with the joy of travel.</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% set team = [
+        ("AI", "AI Engineering",      "Lead IBM watsonx Integration",    "fas fa-brain"),
+        ("UX", "UX Design",           "User Experience &amp; Interface",  "fas fa-paint-brush"),
+        ("BE", "Backend Dev",         "Flask &amp; API Architecture",     "fas fa-server"),
+        ("PM", "Product Management",  "Travel Domain Expert",             "fas fa-map")
+      ] %}
+      {% for initials, role, title, icon in team %}
+        <div class="col-6 col-md-3 fade-in-up">
+          <div class="team-card">
+            <div class="team-avatar">
+              <i class="{{ icon }}"></i>
+            </div>
+            <h6 class="fw-700 mb-1">{{ role }}</h6>
+            <p class="text-muted small mb-0">{{ title }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────── -->
+<section class="py-5 text-center" style="background:linear-gradient(135deg,#0d1b2a,#1e3a5f);">
+  <div class="container py-4">
+    <h2 class="text-white fw-800 mb-3">Start Planning Your Next Adventure</h2>
+    <p class="text-white-50 mb-4">Join 50,000+ travelers using AI-powered trip planning.</p>
+    <a href="{{ url_for('plan') }}" class="btn btn-secondary btn-lg px-5">
+      <i class="fas fa-magic me-2"></i>Plan My Trip
+    </a>
+  </div>
+</section>
+
+{% endblock %}

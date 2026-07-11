@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}AI Travel Assistant — TravelPlannerAI{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Give the Orchestrate widget room to expand full-height on this page */
+  .wxo-assistant-page {
+    min-height: calc(100vh - 72px);
+    background: linear-gradient(135deg, #0d1b2a 0%, #1e3a5f 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 1rem 3rem;
+  }
+  .wxo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    color: #f0f4ff;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+  }
+  .wxo-heading {
+    color: #fff;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: .6rem;
+  }
+  .wxo-sub {
+    color: rgba(255,255,255,.6);
+    text-align: center;
+    max-width: 520px;
+    margin-bottom: 2rem;
+    font-size: .97rem;
+    line-height: 1.65;
+  }
+  /* Container that holds the Orchestrate chat widget */
+  #wxo-chat-wrapper {
+    width: 100%;
+    max-width: 820px;
+    min-height: 600px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.45);
+    background: #fff;
+    position: relative;
+  }
+  /* Feature pills below the widget */
+  .wxo-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .65rem;
+    margin-top: 2rem;
+  }
+  .wxo-pill {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    color: rgba(255,255,255,.85);
+    font-size: .78rem;
+    font-weight: 500;
+    padding: .35rem .9rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wxo-assistant-page">
+
+  <!-- Badge -->
+  <span class="wxo-badge">
+    <i class="fab fa-ibm"></i>IBM watsonx Orchestrate — Live Agent
+  </span>
+
+  <!-- Heading -->
+  <h1 class="wxo-heading">Your AI Travel Assistant</h1>
+  <p class="wxo-sub">
+    Powered by your deployed IBM watsonx Orchestrate agent — ask anything about destinations,
+    itineraries, budgets, visas, and more.
+  </p>
+
+  <!-- ── IBM watsonx Orchestrate embedded chat widget ── -->
+  <div id="wxo-chat-wrapper">
+    <!-- The wxoLoader injects the chat UI into this element -->
+    <div id="root" style="width:100%;height:100%;min-height:600px;"></div>
+  </div>
+
+  <!-- Feature pills -->
+  <div class="wxo-pills">
+    <span class="wxo-pill"><i class="fas fa-globe"></i>120+ Destinations</span>
+    <span class="wxo-pill"><i class="fas fa-calendar-alt"></i>Itinerary Planning</span>
+    <span class="wxo-pill"><i class="fas fa-dollar-sign"></i>Budget Advice</span>
+    <span class="wxo-pill"><i class="fas fa-passport"></i>Visa Guidance</span>
+    <span class="wxo-pill"><i class="fas fa-shield-alt"></i>Safety Tips</span>
+    <span class="wxo-pill"><i class="fas fa-bolt"></i>Instant Answers</span>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  window.wxOConfiguration = {
+    orchestrationID: "cd2b9965ef4542ee9ff6618fb15cbe2a_b0b84a7a-4517-47d6-9658-89cbd0335a87",
+    hostURL: "https://eu-gb.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:eu-gb:a/cd2b9965ef4542ee9ff6618fb15cbe2a:b0b84a7a-4517-47d6-9658-89cbd0335a87::",
+    chatOptions: {
+      agentId: "f6cba6f6-f798-4f11-a86b-4eda1c66cdf7"
+    }
+  };
+
+  setTimeout(function () {
+    var script = document.createElement('script');
+    script.src = window.wxOConfiguration.hostURL + '/wxochat/wxoLoader.js?embed=true';
+    script.addEventListener('load', function () {
+      wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);
+</script>
+{% endblock %}
