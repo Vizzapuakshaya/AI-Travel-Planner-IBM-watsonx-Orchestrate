@@ -282,10 +282,22 @@ Users choose their travel interests and preferences, allowing the AI to generate
 
 ---
 
+---
+
 ## ✅ Step 3 – Review & Generate
 
-Users review all travel information before generating their personalized itinerary.
+Users review all the entered travel details before generating a personalized AI-powered itinerary.
 
-![Review and Generate](screenshots/Review%20and%20Generate
+![Review and Generate](screenshots/Review%20and%20Generate.jpeg)
+
+---
+
+## 🗺️ Destination Overview
+
+The generated itinerary provides a detailed overview of the destination, including popular attractions, recommended activities, travel tips, estimated expenses, and suggested accommodations.
+
+![Destination Overview](screenshots/Destination%20Overview.jpeg)
+
+---
 
 **Built with ❤️ using IBM watsonx Orchestrate**
