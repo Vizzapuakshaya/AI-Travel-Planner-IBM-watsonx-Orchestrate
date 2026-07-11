@@ -218,4 +218,74 @@ MIT License — free to use, modify, and distribute.
 
 ---
 
+---
+
+# 📸 Project Screenshots
+
+This section showcases the complete workflow of the **AI Travel Planner** developed using **IBM watsonx Orchestrate**, from agent creation to itinerary generation and frontend implementation.
+
+---
+
+## 🏠 Home Page
+
+The landing page of the AI Travel Planner website, providing users with an intuitive interface to start planning their trips.
+
+![Home Page](screenshots/Home%20page.jpeg)
+
+---
+
+## 🤖 IBM watsonx Orchestrate Travel Planner Agent
+
+The AI Travel Planner agent created and configured using IBM watsonx Orchestrate.
+
+![IBM Watsonx TravelPlanner](screenshots/IBM%20Watsonx%20TravelPlanner.jpeg)
+
+---
+
+## 📋 Agent Guidelines
+
+Custom instructions and behavioral guidelines configured for the AI Travel Planner to provide accurate and personalized travel recommendations.
+
+![Guidelines](screenshots/Guidelines.jpeg)
+
+---
+
+## 💬 Testing the AI Travel Planner Agent
+
+Testing the deployed IBM watsonx Orchestrate Travel Planner by providing user travel queries and verifying AI-generated responses.
+
+![Agent Test](screenshots/agent-test.jpeg)
+
+---
+
+## 🚀 Live Deployment
+
+The Travel Planner agent successfully deployed and running in Live mode on IBM watsonx Orchestrate.
+
+![Deploy Live](screenshots/Deploy-live.jpeg)
+
+---
+
+## 📍 Step 1 – Travel Details
+
+Users enter their destination, travel dates, and trip duration to begin planning their personalized itinerary.
+
+![When and Where](screenshots/When%20and%20Where.jpeg)
+
+---
+
+## ❤️ Step 2 – Travel Preferences
+
+Users choose their travel interests and preferences, allowing the AI to generate customized recommendations.
+
+![Preferences](screenshots/Preferences.jpeg)
+
+---
+
+## ✅ Step 3 – Review & Generate
+
+Users review all travel information before generating their personalized itinerary.
+
+![Review and Generate](screenshots/Review%20and%20Generate
+
 **Built with ❤️ using IBM watsonx Orchestrate**
